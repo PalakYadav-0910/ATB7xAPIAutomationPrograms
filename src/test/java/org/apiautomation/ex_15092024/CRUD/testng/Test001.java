@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 public class Test001 {
 
     @Test
-    public void test_get(){
+    public void test_get() {
 
         RestAssured
                 .given().relaxedHTTPSValidation()

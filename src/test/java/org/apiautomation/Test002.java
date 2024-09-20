@@ -10,7 +10,7 @@ public class Test002 {
         // Gherkins Syntax
         // given() - url, headers, body or paylaod
         // when() - http methods - get, post, patch, put, delete
-       //  then() - verify the response - er == ar
+        //  then() - verify the response - er == ar
 
         RestAssured
                 .given()

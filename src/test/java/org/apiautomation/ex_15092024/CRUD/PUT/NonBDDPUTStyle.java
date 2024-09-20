@@ -41,13 +41,13 @@ public class NonBDDPUTStyle {
 //    }
 
     @Test
-    public void test_put_positive_tc(){
+    public void test_put_positive_tc() {
         // POST - Auth - token
 
-        String token  = "0d5c10c0a1064ce";
+        String token = "0d5c10c0a1064ce";
         String bookingid = "3159";
 
-        String payloadPUT= "{\n" +
+        String payloadPUT = "{\n" +
                 "    \"firstname\" : \"Pramod\",\n" +
                 "    \"lastname\" : \"Dutta\",\n" +
                 "    \"totalprice\" : 111,\n" +
@@ -62,9 +62,9 @@ public class NonBDDPUTStyle {
 
         requestSpecification = RestAssured.given();
         requestSpecification.baseUri("https://restful-booker.herokuapp.com/");
-        requestSpecification.basePath("/booking/"+bookingid);
+        requestSpecification.basePath("/booking/" + bookingid);
         requestSpecification.contentType(ContentType.JSON);
-        requestSpecification.cookie("token",token);
+        requestSpecification.cookie("token", token);
         requestSpecification.body(payloadPUT).log().all();
 
         Response response = requestSpecification.when().put();
@@ -72,7 +72,7 @@ public class NonBDDPUTStyle {
 
         // Get Validatable response to perform validation
         validatableResponse = response.then().log().all();
-        validatableResponse.statusCode(200)
+        validatableResponse.statusCode(200);
 
     }
 
