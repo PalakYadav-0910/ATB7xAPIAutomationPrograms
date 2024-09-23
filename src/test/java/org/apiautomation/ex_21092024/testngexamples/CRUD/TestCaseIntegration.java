@@ -5,6 +5,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -118,19 +119,50 @@ public class TestCaseIntegration {
     @Test(priority = 2)
     public void test_update_request_get(){
 
-        System.out.println(bookingID);
+        requestSpecification = RestAssured.given();
+        requestSpecification.baseUri("https://restful-booker.herokuapp.com/booking");
+        requestSpecification.basePath("/" + bookingID).log().all();
+
+        response = requestSpecification.when().get();
+
+        validatableResponse = response.then().log().all();
+        validatableResponse.statusCode(200);
+
+        Assert.assertEquals(response.then().extract().path("firstname"), "Palak");
+        Assert.assertEquals(response.then().extract().path("lastname"), "Yadav");
+
     }
 
     @Test(priority = 3)
     public void test_delete_booking(){
 
-        System.out.println(bookingID);
+        requestSpecification = RestAssured.given();
+        requestSpecification.baseUri("https://restful-booker.herokuapp.com/booking");
+        requestSpecification.basePath("/" + bookingID);
+        requestSpecification.contentType(ContentType.JSON);
+        requestSpecification.cookie("token", token).log().all();
+
+        response = requestSpecification.when().delete();
+
+        validatableResponse = response.then().log().all();
+        validatableResponse.statusCode(201);
+
     }
 
     @Test(priority = 4)
     public void test_after_delete_request_get(){
 
-        System.out.println(bookingID);
+        requestSpecification = RestAssured.given();
+        requestSpecification.baseUri("https://restful-booker.herokuapp.com/booking");
+        requestSpecification.basePath("/" + bookingID).log().all();
+
+        response = requestSpecification.when().get();
+
+        validatableResponse = response.then().log().all();
+        validatableResponse.statusCode(404);
+
+        Assert.assertEquals(response.then().extract().statusCode(), 404);
+
     }
 
 }
